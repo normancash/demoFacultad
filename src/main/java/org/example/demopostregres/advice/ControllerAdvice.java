@@ -24,4 +24,12 @@ public class ControllerAdvice {
                                 ,error.getDefaultMessage()));
         return errorValidation;
     }
+
+    @ExceptionHandler(value=Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public Map<String,String> getException(Exception ex){
+        Map<String,String> errorValidation = new HashMap<>();
+        errorValidation.put("error",ex.getMessage());
+        return errorValidation;
+    }
 }

@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotBlank;
 
 public class FacultadDTO {
 
+    private String id;
+
     @NotBlank(message = "El nombre no puede estar vacio")
     private String nombre;
     @NotBlank(message="La descripcion no puede estar vacia")
@@ -26,5 +28,12 @@ public class FacultadDTO {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

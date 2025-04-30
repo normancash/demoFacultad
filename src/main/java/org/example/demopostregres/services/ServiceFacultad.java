@@ -1,6 +1,7 @@
 package org.example.demopostregres.services;
 
 import org.example.demopostregres.dto.FacultadDTO;
+import org.example.demopostregres.exception.FacultadException;
 import org.example.demopostregres.model.Facultad;
 import org.example.demopostregres.repository.IFacultadRepo;
 import org.hibernate.annotations.Comment;
@@ -23,14 +24,24 @@ public class ServiceFacultad
     private ModelMapper modelMapper;
 
     @Override
-    public List<Facultad> getAll() {
+    public List<Facultad> getAll() throws FacultadException{
+        boolean ban = true;
+        if (ban) {
+            throw new FacultadException("A proposito");
+        }
         return facultadRepo.findAll();
     }
 
     @Override
-    public Facultad getOne(Integer id) {
-        return facultadRepo.findById(id).orElse(null);
+    public Facultad getOne(Integer id) throws FacultadException {
+        Facultad facultad = facultadRepo.findById(id).orElse(null);
+        if (facultad == null) {
+            throw new FacultadException("No existe esa " +
+                    "facultad con este id:" + id);
+        }
+        return facultad;
     }
+
 
     @Override
     public Facultad save(Facultad facultad) {

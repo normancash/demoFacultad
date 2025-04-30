@@ -1,6 +1,7 @@
 package org.example.demopostregres.controller;
 
 import jakarta.validation.Valid;
+import org.example.demopostregres.exception.FacultadException;
 import org.example.demopostregres.model.Facultad;
 import org.example.demopostregres.dto.FacultadDTO;
 import org.example.demopostregres.services.IServiceFacultad;
@@ -23,7 +24,7 @@ public class ControllerFacultad {
     private IServiceFacultad serviceFacultad;
 
     @GetMapping("/all")
-    public List<FacultadDTO> getAll() {
+    public List<FacultadDTO> getAll() throws FacultadException{
         return serviceFacultad.getAll().stream()
                 .map(facultad -> modelMapper
                         .map(facultad,FacultadDTO.class))
@@ -31,13 +32,20 @@ public class ControllerFacultad {
     }
 
     @PostMapping("/save")
-    public void save(@RequestBody @Valid FacultadDTO facultadDTO) {
+    public void save(@RequestBody @Valid FacultadDTO facultadDTO) throws FacultadException{
         Facultad facultadDB = modelMapper
                 .map(facultadDTO,Facultad.class);
         modelMapper.map(serviceFacultad.save(facultadDB)
                            ,FacultadDTO.class);
 
     }
+
+    @GetMapping("/{id}")
+    public FacultadDTO findById(@PathVariable("id") Integer id) throws FacultadException {
+        return modelMapper.map(
+                serviceFacultad.getOne(id), FacultadDTO.class);
+    }
+
 
     @PutMapping("/update")
     public void update(@RequestBody FacultadDTO facultadDTO) {
