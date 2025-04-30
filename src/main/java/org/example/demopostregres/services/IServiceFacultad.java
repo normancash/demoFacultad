@@ -1,5 +1,6 @@
 package org.example.demopostregres.services;
 
+import org.example.demopostregres.dto.FacultadDTO;
 import org.example.demopostregres.model.Facultad;
 import org.springframework.stereotype.Service;
 
@@ -12,9 +13,11 @@ public interface IServiceFacultad {
 
     Facultad getOne(Integer id);
 
-    void save(Facultad facultad);
+    Facultad save(Facultad facultad);
 
-    void delete(Facultad facultad);
+    Facultad update(Facultad facultad);
+
+    void delete(Integer id);
 
 
 }
